@@ -1,20 +1,24 @@
-@foreach($clients as $client)
+@forelse($clients as $client)
+
     <tr class="bg-white">
         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-            {{$client->id}}
+            {{$client->lastPayment?->id}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{$client->name}}
+            {{$client->fullName}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{$client->surname}}
+            {{$client->lastPayment?->amount}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{$client->created_at}}
+            {{$client->lastPayment?->created_at}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{$client->updated_at}}
+            {{$client->lastPayment?->updated_at}}
         </td>
-
     </tr>
-@endforeach
+@empty
+    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+        There are no payments in this data range
+    </td>
+@endforelse

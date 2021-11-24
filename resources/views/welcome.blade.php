@@ -31,9 +31,11 @@
                 <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <x-table.table
                      :tableName="['payment id','fullname','amount','created_at','updated_at']">
-
-                        <x-table.payment-td :payments="$payments" />
-
+                        @if(isset($clients))
+                            <x-table.client-td :clients="$clients" />
+                        @elseif(isset($payments))
+                            <x-table.payment-td :payments="$payments" />
+                        @endif
                     </x-table.table>
                 </div>
 

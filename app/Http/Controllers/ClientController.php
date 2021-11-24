@@ -10,31 +10,24 @@ use Illuminate\Http\Request;
 class ClientController extends Controller {
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-
         return view('welcome', [
-            "clients" => Client::all(),
-            "payments" => Payment::all(),
+            "payments" => Payment::withWhereHas("client")->get(),
         ]);
     }
 
     /**
      * @param DateRequest $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
      */
-    public function search(DateRequest $request)
+    public function search(DateRequest $request): \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Contracts\Foundation\Application
     {
-
         return view('welcome', [
             'filters' => $request->all('from', 'to'),
-            "clients" => Client::all(),
-            "payments" => Payment::filter($request->only('from', 'to'))->get()
-                ->unique("client_id")
-                ->sortBy("id")
-                ->values(),
+            "clients" => Client::withWhereHasCallback("lastPayment", fn($payment) => $payment->filter(request()->all('from', 'to')))->get(),
         ]);
     }
 

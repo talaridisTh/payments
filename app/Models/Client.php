@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\HasFilter;
+use App\Traits\HasGlobalCustomEloquent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -11,7 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class Client extends Authenticatable {
 
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasFilter,HasGlobalCustomEloquent;
 
     /**
      * The attributes that are mass assignable.
@@ -53,6 +55,14 @@ class Client extends Authenticatable {
     }
 
     /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasOne
+     */
+    public function lastPayment(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(Payment::class)->latest();
+    }
+
+    /**
      * @param $query
      * @param int $days
      */
@@ -65,6 +75,11 @@ class Client extends Authenticatable {
             $subQuery->orderBy('created_at', 'desc');
         }]);
 
+    }
+
+    public function getFullNameAttribute(): string
+    {
+        return $this->name . " " . $this->surname;
     }
 
 }

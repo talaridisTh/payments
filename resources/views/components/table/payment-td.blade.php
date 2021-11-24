@@ -4,10 +4,10 @@
             {{$payment->id}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            {{$payment->clientFullName}}
+            {{$payment->client->fullName}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-            ${{$payment->amount}}
+            {{$payment->amount}}
         </td>
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             {{$payment->created_at}}
@@ -15,10 +15,9 @@
         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
             {{$payment->updated_at}}
         </td>
-
     </tr>
 @empty
     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-     There are no payments in this data range
+        There are no payments in this data range
     </td>
 @endforelse

@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use App\Traits\HasFilter;
+use App\Traits\HasGlobalCustomEloquent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
 class Payment extends Model {
 
-    use HasFactory, HasFilter;
+    use HasFactory, HasFilter, HasGlobalCustomEloquent;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
@@ -25,7 +26,7 @@ class Payment extends Model {
     public function getClientFullNameAttribute(): string
     {
 
-        return $this->client->name . " ". $this->client->surname;
+        return $this->client->name . " " . $this->client->surname;
     }
 
 }
