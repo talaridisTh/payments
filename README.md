@@ -8,7 +8,7 @@
 ## Getting Started 💻
 
 1. Clone the repo  
-   ` git clone https://github.com/talaridisTh/spotawheel`
+   ` git clone https://github.com/talaridisTh/payments`
 
 2. Install Composer dependencies  
    ` composer install`
